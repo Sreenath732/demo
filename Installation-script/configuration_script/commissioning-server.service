@@ -1,0 +1,21 @@
+[Unit]
+Description=Service that keeps listen on port 5433
+After=network.service auditd.service postgresql.service
+[Service]
+Type=simple
+
+ExecStart=/bin/commissioning-server/commissioning-server 5433
+WorkingDirectory=/bin/commissioning-server
+
+Restart=always
+RestartSec=10
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=append:/var/log/commissioning-server/error.log
+
+Nice=-15
+
+
+[Install]
+WantedBy=multi-user.target

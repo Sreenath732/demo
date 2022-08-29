@@ -1,0 +1,21 @@
+[Unit]
+Description=Service to read UDP Packets(Alarm) from PLC and store in timescale DB.
+After=network.service auditd.service postgresql.service
+[Service]
+Type=simple
+
+ExecStart=/bin/alarmdatacollector/alarmdatacollector
+WorkingDirectory=/bin/alarmdatacollector
+
+Restart=always
+RestartSec=5
+RestartPreventExitStatus=255
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=%n
+
+[Install]
+WantedBy=multi-user.target
+Alias=alarmdatacollector.service
+

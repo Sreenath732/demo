@@ -1,0 +1,19 @@
+[Unit]
+Description=Service that keeps listen on port 9876
+After=network.service auditd.service postgresql.service
+[Service]
+Type=simple
+
+ExecStart=/bin/kpiloggerapi/kpiloggerapi 9876
+WorkingDirectory=/bin/kpiloggerapi/
+
+Restart=always
+RestartSec=10
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=append:/var/log/kpiloggerapi/error.log
+
+[Install]
+WantedBy=multi-user.target
+Alias=kpiloggerapi.service
